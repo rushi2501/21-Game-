@@ -25,6 +25,7 @@ Enjoy!!
 
 https://github.com/user-attachments/assets/16f95ebf-dc11-4519-9045-ae5c0f73ebfb
 
-
+**Here is a demo for the game.
+As you can see, in Blackjack rules, multiple games happen within the same round, which is why the dealer loses and wins. 
 
 
