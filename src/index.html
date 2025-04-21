@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blackjack</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="container">
+    <!-- title screen -->
+    <div class="title-screen" id="titleScreen">
+      <h1>BLACKJACK!</h1>
+      <div class="player-selection">
+        <h2>Select the amount of players:</h2>
+        <div class="playerCounter">
+          <button id="increasePlayer">▲</button>
+          <span id="playerCount">1</span>
+          <button id="decreasePlayer">▼</button>
+        </div>
+      </div>
+      <button class="btn btn-start" id="startGameBtn">Start game!</button>
+    </div>
+
+    <!-- main game screen -->
+    <div class="game-screen" id="gameScreen">
+      <div class="stats">
+        <div class="gameStats" id="gameStats"></div> <!-- apply .gameStats class here -->
+        <div class="playerTurnIndicator" id="playerTurnIndicator">Player 1's Turn</div>
+        <div class="message" id="message"></div>
+        <div class="controls">
+          <button class="btn btn-action" id="hitBtn">Hit (H)</button>
+          <button class="btn btn-action" id="stayBtn">Stay (S)</button>
+        </div>
+      </div>
+
+
+
+      <!-- game table -->
+      <div class="table">
+        <div class="dealerArea">
+          <h2>Dealer: <span id="dealerScore">0</span></h2>
+          <div class="cards" id="dealerCards"></div>
+        </div>
+        <!-- adding players according to the player count -->
+        <div id="playersContainer" class="playersContainer">
+        </div>
+      </div>
+
+      <!-- options to quit or keep going-->
+      <div class="play-again-container" id="playAgainContainer" style="display: none;">
+        <button class="btn btn-start" id="playAgainBtn">PLAY AGAIN</button>
+        <button class="btn btn-quit" id="quitBtn">QUIT</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
