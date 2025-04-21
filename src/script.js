@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // card suit keyboard symbols, card values, card pickup
   const suits = ['♥', '♦', '♠', '♣'];
   const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
-  const audioCard = new Audio('card-sounds-35956.mp3');
+  const audioCard = new Audio('assets/card-sounds-35956.mp3');
 
   // event listeners / user inputs  ------------------------------------------------------------
   document.getElementById('decreasePlayer').addEventListener('click', () => {
@@ -202,10 +202,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function nextTurn() { // move to next player's turn, until all players have gone. only then dealer plays
     currentPlayerIndex++;
+
     if (currentPlayerIndex < players.length) {
       updateActivePlayer();
     } else {
-      dealerPlay();
+      const allPlayersBusted = players.every(player => player.status === 'bust');
+
+      if (allPlayersBusted) {
+        message.textContent = "All players busted! Dealer wins.";
+        setTimeout(() => {
+          endGame(true); // end game -- dealer wouldn't have to go
+        }, 1000);
+      } else {
+        dealerPlay();
+      }
     }
   }
 
@@ -244,51 +254,87 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 1000); // 1 second delay between dealer cards
     } else { // dealer is done drawing
       setTimeout(() => {
-        endGame();
+        endGame(false);
       }, 1000);
     }
   }
 
-  function endGame() { // end game and determine winner
+  function endGame(allPlayersBusted = false) { // end game and determine winner
     gameOver = true;
-    const dealerValue = calcHandValue(dealerHand);
-    const dealerBust = dealerValue > 21;
     const dealerIndex = playerCount; // makes it so dealer's stats are stored at the end of the playerStats array
 
-    if (dealerBust) {
-      message.textContent = `Dealer busted with ${dealerValue}!`;
+    if (allPlayersBusted) {
+      players.forEach((player, index) => {
+        playerStats[index].losses++;
+        playerStats[dealerIndex].wins++;
+      });
+      playerTurnIndicator.textContent = "Game Over - Dealer Wins";
     } else {
-      message.textContent = `Dealer stays with ${dealerValue}.`;
-    }
+      const dealerValue = calcHandValue(dealerHand);
+      const dealerBust = dealerValue > 21;
 
-    // check results for EACH player and update their individual stats
-    players.forEach((player, index) => {
-      const playerValue = calcHandValue(player.hand);
-      const playerEl = player.element;
+      if (dealerBust) {
+        message.textContent = `Dealer busted with ${dealerValue}!`;
 
-      // update stats if there's a clear winner (no ties)
-      // After doing more research, I found that the dealer can have more than one win per round, so I changed the logic to reflect that -- this is why the dealer's updated stats can increase by more than 1
-      if (player.status === 'bust') {
-        playerStats[index].losses++;
-        playerStats[dealerIndex].wins++; // Dealer wins
-      } else if (dealerBust) {
-        playerStats[index].wins++;
-        playerStats[dealerIndex].losses++; // Dealer loses
-      } else if (playerValue > dealerValue) {
-        playerStats[index].wins++;
-        playerStats[dealerIndex].losses++; // Dealer loses
-      } else if (playerValue < dealerValue) {
-        playerStats[index].losses++;
-        playerStats[dealerIndex].wins++; // Dealer wins
+        // Find non-busted players and declare them winners
+        let winnersFound = false;
+        players.forEach((player, index) => {
+          if (player.status !== 'bust') {
+            playerStats[index].wins++;
+            playerStats[dealerIndex].losses++;
+            winnersFound = true;
+          } else {
+            playerStats[index].losses++;
+            playerStats[dealerIndex].wins++;
+          }
+        });
+
+        if (winnersFound) {
+          playerTurnIndicator.textContent = "Game Over - Players Win";
+        } else {
+          playerTurnIndicator.textContent = "Game Over - Dealer Wins";
+        }
+      } else {
+        message.textContent = `Dealer stays with ${dealerValue}.`;
+
+        // Compare hands and determine winners
+        let dealerWins = 0;
+        let playerWins = 0;
+
+        players.forEach((player, index) => {
+          const playerValue = calcHandValue(player.hand);
+
+          if (player.status === 'bust') {
+            playerStats[index].losses++;
+            playerStats[dealerIndex].wins++;
+            dealerWins++;
+          } else if (playerValue > dealerValue) {
+            playerStats[index].wins++;
+            playerStats[dealerIndex].losses++;
+            playerWins++;
+          } else if (playerValue < dealerValue) {
+            playerStats[index].losses++;
+            playerStats[dealerIndex].wins++;
+            dealerWins++;
+          }
+          // Ties don't count as wins or losses for either side
+        });
+
+        if (playerWins > dealerWins) {
+          playerTurnIndicator.textContent = "Game Over - Players Win";
+        } else if (dealerWins > playerWins) {
+          playerTurnIndicator.textContent = "Game Over - Dealer Wins";
+        } else {
+          playerTurnIndicator.textContent = "Game Over - It's a Tie";
+        }
       }
-    });
+    }
 
     // update overall game stats display
     updateGameStatsDisplay();
 
     // display play again button
     document.getElementById('playAgainContainer').style.display = 'block';
-    playerTurnIndicator.textContent = "Game Over";
 
     disableButtons(); // disable buttons after game ends
     actionInProgress = false;
