@@ -209,9 +209,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const allPlayersBusted = players.every(player => player.status === 'bust');
 
       if (allPlayersBusted) {
-        message.textContent = "All players busted! Dealer wins.";
+        message.textContent = "All players busted! Dealer wins .";
         setTimeout(() => {
-          endGame(true); // end game -- dealer wouldn't have to go
+          endGame(true);
         }, 1000);
       } else {
         dealerPlay();
