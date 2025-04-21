@@ -231,32 +231,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1000);
   }
 
-  function dealerDrawSequence(currentValue) {
+  function dealerDrawSequence(currentValue) { // dealer draws cards until they reach 16 or bust
     if (currentValue < 16) {
       setTimeout(() => {
-        const card = dealCard();
+        const card = dealCard(); // deal card to dealer
         dealerHand.push(card);
-        dealerCards.appendChild(createCardEl(card));
-
+        dealerCards.appendChild(createCardEl(card)); // add card to dealer's hand
         const newValue = calcHandValue(dealerHand);
-        dealerScore.textContent = newValue;
+        dealerScore.textContent = newValue; // update dealer's score
 
-        // Continue the sequence with the updated value
         dealerDrawSequence(newValue);
       }, 1000); // 1 second delay between dealer cards
-    } else {
-      // Dealer is done drawing
+    } else { // dealer is done drawing
       setTimeout(() => {
         endGame();
       }, 1000);
     }
   }
 
-  function endGame() {
+  function endGame() { // end game and determine winner
     gameOver = true;
     const dealerValue = calcHandValue(dealerHand);
     const dealerBust = dealerValue > 21;
-    const dealerIndex = playerCount; // Index of dealer in playerStats
+    const dealerIndex = playerCount; // makes it so dealer's stats are stored at the end of the playerStats array
 
     if (dealerBust) {
       message.textContent = `Dealer busted with ${dealerValue}!`;
@@ -264,12 +261,13 @@ document.addEventListener('DOMContentLoaded', () => {
       message.textContent = `Dealer stays with ${dealerValue}.`;
     }
 
-    // Check results for each player and update their individual stats
+    // check results for EACH player and update their individual stats
     players.forEach((player, index) => {
       const playerValue = calcHandValue(player.hand);
       const playerEl = player.element;
 
-      // Only update stats if there's a clear winner (no ties)
+      // update stats if there's a clear winner (no ties)
+      // After doing more research, I found that the dealer can have more than one win per round, so I changed the logic to reflect that -- this is why the dealer's updated stats can increase by more than 1
       if (player.status === 'bust') {
         playerStats[index].losses++;
         playerStats[dealerIndex].wins++; // Dealer wins
@@ -283,17 +281,16 @@ document.addEventListener('DOMContentLoaded', () => {
         playerStats[index].losses++;
         playerStats[dealerIndex].wins++; // Dealer wins
       }
-      // For ties/pushes, we don't update any stats
     });
 
-    // Update overall game stats display
+    // update overall game stats display
     updateGameStatsDisplay();
 
-    // Show play again button
+    // display play again button
     document.getElementById('playAgainContainer').style.display = 'block';
     playerTurnIndicator.textContent = "Game Over";
 
-    disableButtons();
+    disableButtons(); // disable buttons after game ends
     actionInProgress = false;
   }
 
@@ -309,19 +306,19 @@ document.addEventListener('DOMContentLoaded', () => {
     enableButtons(); // enable buttons for current player's turn
   }
 
-  // Helper Functions
-  function enableButtons() {
+  // Helper Functions -----------------------------------------------------------
+  function enableButtons() { // enable buttons 
     hitBtn.disabled = false;
     stayBtn.disabled = false;
   }
 
-  function disableButtons() {
+  function disableButtons() { // disable buttons
     hitBtn.disabled = true;
     stayBtn.disabled = true;
   }
 
-  function createDeck() {
-    const newDeck = [];
+  function createDeck() { // create deck of cards
+    const newDeck = []; // start with empty deck, use for loop to generate all combinations of suits and values
     for (const suit of suits) {
       for (const value of values) {
         newDeck.push({ suit, value });
@@ -358,7 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return cardEl;
   }
 
-  function calcHandValue(hand) {
+  function calcHandValue(hand) { // calculate hand value
     let value = 0;
     let aceCount = 0;
 
@@ -366,12 +363,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (card.isHidden) continue;
 
       if (card.value === 'A') {
-        aceCount++;
+        aceCount++; // keep track of aces for later
         value += 11;
       } else if (['J', 'Q', 'K'].includes(card.value)) { // face cards are equal to 10
         value += 10;
       } else {
-        value += parseInt(card.value);
+        value += parseInt(card.value); // use the cards value as an integer
       }
     }
 
