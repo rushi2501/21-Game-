@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const suits = ['♥', '♦', '♠', '♣'];
   const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
   const audioCard = new Audio('assets/card-sounds-35956.mp3');
-
   // event listeners / user inputs  ------------------------------------------------------------
   document.getElementById('decreasePlayer').addEventListener('click', () => {
     if (playerCount > 1) playerCountDisplay.textContent = --playerCount; // decrease player count, but not below 1
