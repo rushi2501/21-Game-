@@ -23,7 +23,8 @@ How to set up:
 
 Enjoy!!
 
-Uploading blackjackdemo.mp4…
+https://github.com/user-attachments/assets/16f95ebf-dc11-4519-9045-ae5c0f73ebfb
+
 
 
 
