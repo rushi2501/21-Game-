@@ -1,0 +1,252 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: monospace;
+}
+
+body {
+  background-color: #850014;
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 20px;
+}
+
+/* Title Screen */
+
+.title-screen {
+  text-align: center;
+  padding: 40px;
+}
+
+.title-screen h1 {
+  font-size: 4rem;
+  margin-bottom: 30px;
+}
+
+.player-selection {
+  margin: 30px 0;
+}
+
+.player-selection h2 {
+  margin-bottom: 15px;
+}
+
+.playerCounter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px 0;
+}
+
+.playerCounter button {
+  /* increase/decrease player buttons */
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  border: none;
+  background-color: #004445;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.playerCounter span {
+  margin: 0 20px;
+  font-size: 2rem;
+}
+
+.btn {
+  /* general button styling */
+  padding: 12px 30px;
+  font-size: 1.2rem;
+  background-color: #004445;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px;
+  transition: all 0.3s;
+}
+
+.btn:hover {
+  background-color: #001e1f;
+  transform: translateY(-2px);
+}
+
+.btnStart {
+  background-color: #262421;
+  padding: 15px 40px;
+  font-size: 1.5rem;
+}
+
+.btnStart:hover {
+  background-color: #1f1f1e;
+}
+
+.btnQuit {
+  background-color: #d64545;
+  padding: 15px 40px;
+  font-size: 1.5rem;
+}
+
+.btn-quit:hover {
+  background-color: #b83232;
+}
+
+.btn-action {
+  background-color: #3a8f89;
+  width: 120px;
+}
+
+.btn-action:hover {
+  background-color: #2a6964;
+}
+
+/* Game Screen */
+.game-screen {
+  display: none;
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.gameStats {
+  /* display stats */
+  display: flex;
+  flex-direction: column;
+}
+
+.playerTurnIndicator {
+  /* display who's turn it is */
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding-left: 40px;
+}
+
+.controls {
+  /* hit and stay buttons */
+  display: flex;
+  flex-direction: row;
+}
+
+.message {
+  /* display what is currently happening */
+  flex-grow: 1;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.table {
+  /* game table */
+  background-color: #1e5958;
+  padding: 20px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  position: relatives;
+  min-height: 300px;
+}
+
+.dealerArea {
+  /* dealer area */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.playersContainer {
+  /* container for each player */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 0px;
+}
+
+.playerArea {
+  /* player area */
+  padding: 10px;
+  text-align: center;
+  margin: 5px;
+  width: calc(50% - 40px);
+  min-width: 200px;
+}
+
+.playerArea.active h2 {
+  /* active player indicator */
+  color: gold;
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+  /* gold glow effect */
+}
+
+.playerArea.bust h2 {
+  color: #ff6b6b;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.card {
+  /* card styling */
+  width: 73px;
+  height: 108px;
+  background-color: white;
+  border-radius: 5px;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-size: 1.5rem;
+  font-weight: bold;
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.card.red {
+  /* red suit cards */
+  color: red;
+}
+
+.card.face-down {
+  /* portion provided by AI */
+  background-color: #004445;
+  background-image: linear-gradient(45deg, #003536 25%, transparent 25%),
+    linear-gradient(-45deg, #003536 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #003536 75%),
+    linear-gradient(-45deg, transparent 75%, #003536 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  color: transparent;
+}
+
+.card-value {
+  font-size: 2rem;
+}
+
+.card-suit {
+  font-size: 2.5rem;
+  margin-top: 5px;
+}
+
+.playAgain {
+  text-align: center;
+  margin: 20px 0;
+
+}
