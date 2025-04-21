@@ -15,10 +15,15 @@ How to set up:
    git clone https://github.com/rushi2501/21-Game-.git
 
 4. Go into the project folder:
+
+5. 
    cd 21-Game-
    
-5. Open index.html in your browser.
+6. Open index.html in your browser.
 
 Enjoy!!
+
+Uploading blackjackdemo.mp4…
+
 
 
