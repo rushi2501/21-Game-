@@ -99,16 +99,16 @@ body {
   font-size: 1.5rem;
 }
 
-.btn-quit:hover {
+.btnQuit:hover {
   background-color: #b83232;
 }
 
-.btn-action {
+.btnAction {
   background-color: #3a8f89;
   width: 120px;
 }
 
-.btn-action:hover {
+.btnAction:hover {
   background-color: #2a6964;
 }
 
@@ -249,4 +249,10 @@ body {
   text-align: center;
   margin: 20px 0;
 
+}
+
+.playAgainContainer {
+  text-align: center;
+  margin: 20px 0;
+  justify-content: center;
 }
